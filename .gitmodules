@@ -1,0 +1,3 @@
+[submodule "prover"]
+	path = prover
+	url = https://github.com/qed-solver/prover.git
