@@ -1,17 +1,29 @@
 # Verified LLM SQL Query Rewrite
 **15-799 Special Topics in Databases: Query Optimization** | Spring 2025
 
-A project that optimizes SQL queries by providing a LLM with table schema and statistics, prompting it to generate a new query, and then verifying semantic equivalence using semantic prover (QED) and running both queries on generated datasets to check for identical outputs.
+A project that optimizes SQL queries by providing a LLM with table schema and statistics, prompting it to generate a new query, and then verifying semantic equivalence using semantic prover and running both queries on generated datasets to check for identical outputs.
+
+It utilizes the parser and prover in [Query Equivalence Decider (QED)](https://github.com/qed-solver) to perform the semantic equivalence check.
 
 ## Usage
-
-First, export your OpenAI API key with the command below.
+After cloning this project, include the submodules (prover & parser):
 ```sh
-pip install openai==0.28.1
+git submodule update --init --recursive
+```
+
+Export your OpenAI API key:
+```sh
 export OPENAI_API_KEY=[your api key]
 ```
 
-Run the queries below consecutively in order.
+Install the necessary packages:
+```sh
+pip install openai==0.28.1
+pip install faker
+pip install duckdb
+```
+
+Run the commands below consecutively in order.
 - `pipeline.py` prompts the LLM to give optimized queries by giving it the original queries, table schemas, and statistics on the table
 - `generate.py` generates random tables based on the scheme given for testing query equivalence
 - `test_data.py` combines the results from above and outputs whether the original query and the LLM-optimized query are equal based on the random tables generated
