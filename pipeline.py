@@ -1,12 +1,12 @@
 import os
 import openai
+import argparse
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 if openai.api_key is None:
     raise ValueError("Please set the OPENAI_API_KEY environment variable.")
 
-
-prompt = "Your job is to rewrite SQL queries to optimize performance in duckdb. Make sure it has the same output and don't modify the predicates even if it seems wrong. \
+prompt = "Your job is to rewrite SQL queries to optimize performance in DuckDB. Make sure it has the same output and doesn't modify the predicates even if it seems wrong. \
             Only output the optimized query in one line, don't include any other additional words and newline characters\
             You are given the following workload stats and schema to help you with rewriting the queries: "
 workload_stats = "given the cardinalities of the table: Loaded 75000 rows from customer (Parquet).\
@@ -41,9 +41,6 @@ def get_optimized_query(user_query):
     reply = response['choices'][0]['message']['content']
     return reply
 
-query_pairs = []
-
-import argparse
 
 parser = argparse.ArgumentParser(description="Generate optimized SQL queries.")
 parser.add_argument("--workload_path", type=str)
@@ -61,8 +58,9 @@ workload_stats = schema + '\n' + stats
 messages = [
     {"role": "system", "content": prompt + '\n' + workload_stats}
 ]
+query_pairs = []
 
-# workload_path is a directory
+
 with os.scandir(workload_path) as entries:
     for entry in entries:
         if entry.name.endswith('.sql') and entry.is_file() and entry.name.startswith('query'):
@@ -73,7 +71,7 @@ with os.scandir(workload_path) as entries:
                 print(f"User Query: {user_query}")
                 print(f"Optimized Query: {optimized_query}")
 
-# Save the query pairs to a file
+
 output_file = os.path.join(workload_path, 'optimized_queries.txt')
 with open(output_file, 'w') as f:
     for user_query, optimized_query in query_pairs:

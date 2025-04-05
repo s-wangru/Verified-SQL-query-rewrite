@@ -8,12 +8,12 @@ parser.add_argument("--load_path", type=str, default=None)
 args = parser.parse_args()
 
 conn = duckdb.connect(database=':memory:')
-with open (args.schema_path, 'r') as f:
+with open(args.schema_path, 'r') as f:
     sql = f.read()
     conn.execute(sql)
     conn.commit()
 
-with open (args.load_path, 'r') as f:
+with open(args.load_path, 'r') as f:
     sql = f.read()
     conn.execute(sql)
     conn.commit()
@@ -36,7 +36,7 @@ with open(args.workload_path, 'r') as f:
         except Exception as e:
             # print(f"Error executing optimized query: {e}")
             errors += 1
-            print("The query not supported in duckdb ")
+            print("The optimized query is not supported in DuckDB.")
 
         if df_orig.equals(df_optim):
             equals += 1
@@ -45,6 +45,9 @@ with open(args.workload_path, 'r') as f:
             nequals += 1
             print("The query results are not equal.")
 
+print("")
+print("================SUMMARY=================")
+print(f"Total queries: {equals + nequals + errors}")
 print(f"Equals: {equals}")
 print(f"Not Equals: {nequals}")
 print(f"Errors: {errors}")
