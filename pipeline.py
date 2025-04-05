@@ -28,30 +28,54 @@ workload_stats = "given the cardinalities of the table: Loaded 75000 rows from c
                 CREATE TABLE supplier(s_suppkey BIGINT NOT NULL, s_name VARCHAR NOT NULL, s_address VARCHAR NOT NULL, s_nationkey INTEGER NOT NULL, s_phone VARCHAR NOT NULL, s_acctbal DECIMAL(15,2) NOT NULL, s_comment VARCHAR NOT NULL);\
                 CREATE VIEW revenue0r15721 (supplier_no, total_revenue) AS SELECT l_suppkey, sum(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= DATE '1995-01-01' AND l_shipdate < DATE '1995-01-01' + INTERVAL '3' MONTH GROUP BY l_suppkey; "
                                     
+
+def get_optimized_query(user_query):
+    tmp_messages = messages.copy()
+    tmp_messages.append({"role": "user", "content": user_query})
+
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=tmp_messages
+    )
+
+    reply = response['choices'][0]['message']['content']
+    return reply
+
+query_pairs = []
+
+import argparse
+
+parser = argparse.ArgumentParser(description="Generate optimized SQL queries.")
+parser.add_argument("--workload_path", type=str)
+parser.add_argument("--schema_path", type=str, default=None)
+parser.add_argument("--stats_path", type=str, default=None)
+args = parser.parse_args()
+
+workload_path = args.workload_path
+with open(args.schema_path, 'r') as f:
+    schema = f.read()
+with open (args.stats_path, 'r') as f:
+    stats = f.read()
+workload_stats = schema + '\n' + stats
+
 messages = [
     {"role": "system", "content": prompt + '\n' + workload_stats}
 ]
 
+# workload_path is a directory
+with os.scandir(workload_path) as entries:
+    for entry in entries:
+        if entry.name.endswith('.sql') and entry.is_file() and entry.name.startswith('query'):
+            with open(entry.path, 'r') as f:
+                user_query = f.read()
+                optimized_query = get_optimized_query(user_query)
+                query_pairs.append((user_query, optimized_query))
+                print(f"User Query: {user_query}")
+                print(f"Optimized Query: {optimized_query}")
 
-query_pairs = []
-
-while True:
-    user_query = input("Original query: ")
-    if user_query.strip().lower() == 'exit':
-        break
-
-    messages.append({"role": "user", "content": user_query})
-
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=messages
-    )
-
-    reply = response['choices'][0]['message']['content']
-    print("Optimized query:", reply, "\n")
-
-    query_pairs.append((user_query, reply))
-
-for i in query_pairs:
-    print(i)
-    print('-' * 50)
+# Save the query pairs to a file
+output_file = os.path.join(workload_path, 'optimized_queries.txt')
+with open(output_file, 'w') as f:
+    for user_query, optimized_query in query_pairs:
+        f.write(f"User Query: {user_query}\n")
+        f.write(f"Optimized Query: {optimized_query}\n\n")

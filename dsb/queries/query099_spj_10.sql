@@ -1,5 +1,5 @@
 
-explain analyze select min(w_warehouse_name)
+select min(w_warehouse_name)
   ,min(sm_type)
   ,min(cc_name)
   ,min(cs_order_number)

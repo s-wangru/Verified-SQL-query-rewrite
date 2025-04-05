@@ -1,5 +1,5 @@
 
-explain analyze select  c_customer_sk, c_first_name, c_last_name, count(*) as cnt
+select  c_customer_sk, c_first_name, c_last_name, count(*) as cnt
 FROM
 store_sales,
 store_returns,

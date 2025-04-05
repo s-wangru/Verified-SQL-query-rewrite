@@ -1,5 +1,5 @@
 
-explain analyze select min(item1.i_item_sk),
+select min(item1.i_item_sk),
     min(item2.i_item_sk),
     min(s1.ss_ticket_number),
     min(s1.ss_item_sk)

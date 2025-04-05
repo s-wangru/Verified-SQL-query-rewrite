@@ -1,5 +1,5 @@
 
-explain analyze select  item1.i_item_sk, item2.i_item_sk, count(*) as cnt
+select  item1.i_item_sk, item2.i_item_sk, count(*) as cnt
 FROM item AS item1,
 item AS item2,
 store_sales AS s1,

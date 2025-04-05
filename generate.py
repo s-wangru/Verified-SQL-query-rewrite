@@ -1,10 +1,16 @@
 import re
 import random
 from faker import Faker
+import argparse
 
 fake = Faker()
 
-# TODO: edit the schema & rows & output file to match your needs
+parser = argparse.ArgumentParser(description="Generate optimized SQL queries.")
+parser.add_argument("--workload_path", type=str)
+parser.add_argument("--schema_path", type=str, default=None)
+parser.add_argument("--output_path", type=str, default=None)
+args = parser.parse_args()
+
 SCHEMA = """
 CREATE TABLE dbgen_version (
     dv_version        VARCHAR(16),
@@ -13,6 +19,9 @@ CREATE TABLE dbgen_version (
     dv_cmdline_args   VARCHAR(200)
 );
 """
+
+
+
 NUM_ROWS = 100
 OUTPUT_FILE = "test.dat"
 DELIMITER = "|"
@@ -60,4 +69,20 @@ def generate_dat_file(schema_sql, num_rows, filename):
             row = [generate_value(col_type) for _, col_type in columns]
             f.write(DELIMITER.join(row) + DELIMITER + "\n")
 
-generate_dat_file(SCHEMA, NUM_ROWS, OUTPUT_FILE)
+
+with open(args.schema_path, 'r') as f:
+    schema = f.read()
+    for s in schema.split(';'):
+        if s.strip():
+            SCHEMA = s + ";\n"
+            pattern = r"CREATE TABLE\s+(\w+)"
+            match = re.search(pattern, SCHEMA, re.IGNORECASE)
+
+            if match:
+                table_name = match.group(1)
+
+                generate_dat_file(SCHEMA, NUM_ROWS, args.output_path + '/' + table_name + ".dat")
+            else:
+                print("Table name not found in the schema.")
+        else:
+            print(s)
