@@ -6,7 +6,7 @@ if openai.api_key is None:
     raise ValueError("Please set the OPENAI_API_KEY environment variable.")
 
 
-prompt = "Your job is to rewrite SQL queries to optimize performance. Make sure it has the same output and don't modify the predicates even if it seems wrong. \
+prompt = "Your job is to rewrite SQL queries to optimize performance in duckdb. Make sure it has the same output and don't modify the predicates even if it seems wrong. \
             Only output the optimized query in one line, don't include any other additional words and newline characters\
             You are given the following workload stats and schema to help you with rewriting the queries: "
 workload_stats = "given the cardinalities of the table: Loaded 75000 rows from customer (Parquet).\

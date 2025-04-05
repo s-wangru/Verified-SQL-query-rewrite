@@ -58,15 +58,13 @@ def generate_value(col_type):
         return str(random.choice([True, False]))
     elif "DECIMAL" in col_type or "NUMERIC" in col_type:
         return f"{random.uniform(1.0, 1000.0):.2f}"
-    else:
-        return fake.word()
 
 
 def generate_dat_file(schema_sql, num_rows, filename):
     columns = parse_schema(schema_sql)
     with open(filename, "w", encoding="utf-8") as f:
         for _ in range(num_rows):
-            row = [generate_value(col_type) for _, col_type in columns]
+            row = [generate_value(col_type) for _, col_type in columns if col_type != 'KEY' and col_type != 'TABLE']
             f.write(DELIMITER.join(row) + DELIMITER + "\n")
 
 
