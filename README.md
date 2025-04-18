@@ -21,9 +21,10 @@ Install the necessary packages:
 pip install openai==0.28.1
 pip install faker
 pip install duckdb
+curl -L https://nixos.org/nix/install | sh
 ```
 
-Run the commands below consecutively in order.
+Restart the terminal & run the commands below consecutively in order.
 - `pipeline.py` prompts the LLM to give optimized queries by giving it the original queries, table schemas, and statistics on the table
 - `generate.py` generates random tables based on the scheme given for testing query equivalence
 - `test_data.py` combines the results from above and outputs whether the original query and the LLM-optimized query are equal based on the random tables generated

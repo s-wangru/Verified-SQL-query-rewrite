@@ -76,11 +76,11 @@ with open(args.workload_path, 'r') as f:
             f.write(optimized)
 
         # nix run github:qed-solver/parser -- tests
-        cmd = ["/nix/var/nix/profiles/default/bin/nix", "run", "github:qed-solver/parser", "--", "../tmp"]
+        cmd = ["nix", "run", "github:qed-solver/parser", "--", "../tmp"]
         subprocess.run(cmd, cwd="parser/", capture_output=False, stderr=subprocess.DEVNULL)
 
         # nix run github:qed-solver/prover -- tests
-        cmd = ["/nix/var/nix/profiles/default/bin/nix", "run", "github:qed-solver/prover", "--", "../tmp"]
+        cmd = ["nix", "run", "github:qed-solver/prover", "--", "../tmp"]
         result = subprocess.run(cmd,  cwd="parser/", capture_output=True, text=True)
 
         lines = result.stdout.splitlines()
