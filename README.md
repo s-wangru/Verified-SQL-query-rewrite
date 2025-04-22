@@ -49,8 +49,8 @@ To run all unit tests & check code coverage:
 ```sh
 pytest --cov=. --cov-config=.coveragerc
 ```
-
-As of 04/22/2025, code coverage report is as below:
+---
+*As of 04/22/2025, code coverage report is as below:*
 ```sh
 Name                   Stmts   Miss  Cover
 ------------------------------------------
