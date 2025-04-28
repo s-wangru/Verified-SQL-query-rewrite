@@ -89,14 +89,37 @@ def shuffle_definitions(sql):
     random.shuffle(blocks)
     return '\n\n'.join(blocks)
 
+import shutil
+
+def rename_tbl_files(mapping, tbl_dir, output_tbl_dir):
+    if not os.path.isdir(tbl_dir):
+        raise NotADirectoryError(f".tbl directory not found: {tbl_dir}")
+    os.makedirs(output_tbl_dir, exist_ok=True)
+    for fname in os.listdir(tbl_dir):
+        if not fname.lower().endswith('.tbl'):
+            continue
+        orig_name = os.path.splitext(fname)[0]
+        new_name = mapping.get(orig_name)
+        if new_name:
+            src = os.path.join(tbl_dir, fname)
+            dst = os.path.join(output_tbl_dir, new_name + '.tbl')
+            shutil.copy2(src, dst)
+            print(f"Copied: {fname} -> {new_name}.tbl")
+        else:
+            print(f"Skipping {fname}: no mapping found.")
+
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: schema_shuffle.py <input_schema.sql> [output_schema.sql]")
+    if len(sys.argv) < 4:
+        print("Usage: schema_shuffle.py <input_schema.sql> [output_schema.sql] <tbl_dir> [output_tbl_dir]")
         sys.exit(1)
 
     input_path = sys.argv[1]
     output_path = sys.argv[2] if len(sys.argv) > 2 else 'shuffled_schema.sql'
+    tbl_dir = sys.argv[3]
+    output_tbl_dir = sys.argv[4]
+    if tbl_dir and output_tbl_dir:
+        os.makedirs(output_tbl_dir, exist_ok=True)
     with open('nouns.txt', 'r', encoding='utf-8') as f:
         nouns = f.read().splitlines()
 
@@ -117,6 +140,9 @@ def main():
     with open(mapping_path, 'w', encoding='utf-8') as mf:
         json.dump(mapping, mf, indent=2)
     print(f"Mapping JSON written to {mapping_path}")
+
+    if tbl_dir and output_tbl_dir:
+        rename_tbl_files(mapping, tbl_dir, output_tbl_dir)
 
 
 if __name__ == '__main__':
