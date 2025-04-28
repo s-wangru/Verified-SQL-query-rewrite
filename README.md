@@ -60,3 +60,15 @@ prompt_llm.py             44     23    48%
 ------------------------------------------
 TOTAL                    236     96    59%
 ```
+
+
+## For shuffling schemas
+
+```sh
+cd shuffle
+python schema_rewrite.py ../dsb/queries/create_tables.sql ../dsb_shuffle/cs.sql ../dsb/table ../dsb_shuffle/table 
+```
+
+```sh
+python query_rewrite.py ../dsb_shuffle/cs_mapping.json ../dsb/queries ../dsb_shuffle/queries -c
+```
