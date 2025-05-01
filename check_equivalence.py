@@ -24,10 +24,11 @@ def load_schema_and_data(schema_path, load_path):
     
     return conn, schema
 
-def qed(schema, orig, optimized):
+def qed(schema, orig, optimized, qed_equal_queries, qed_nequal_queries, qed_cannotdet_queries):
     with open('tmp/temp.sql', 'w') as f:
         f.write(schema)
         f.write(orig)
+        f.write("\n")
         f.write(optimized)
 
     # nix run github:qed-solver/parser -- tests
@@ -44,32 +45,40 @@ def qed(schema, orig, optimized):
         if "for temp.json" in line:
             if "not provable" in line:
                 qed_output = Output.NEQUAL
+                qed_nequal_queries.append(orig)
             elif "provable" in line:
                 qed_output = Output.EQUAL
+                qed_equal_queries.append(orig)
             print("QED: " + line[:-13])
             output = True
             break
 
     if not output:
         qed_output = Output.INCONCLUSIVE
+        qed_cannotdet_queries.append(orig)
         print("QED: Cannot be determined")
 
     os.remove('tmp/temp.sql')
     return qed_output
 
-def synthetic_data(conn, orig, optimized):
-    df_orig = conn.execute(orig).fetchdf()
+def synthetic_data(conn, orig, optimized, synthetic_equal_queries, synthetic_nequal_queries, synthetic_error_queries):
     try:
+        df_orig = conn.execute(orig).fetchdf()
         df_optim = conn.execute(optimized).fetchdf()
+        df_orig_sorted = df_orig.sort_values(by=df_orig.columns.tolist()).reset_index(drop=True)
+        df_optim_sorted = df_optim.sort_values(by=df_optim.columns.tolist()).reset_index(drop=True)
 
-        if df_orig.equals(df_optim):
+        if df_orig_sorted.equals(df_optim_sorted):
             synthetic_output = Output.EQUAL
+            synthetic_equal_queries.append(orig)
             print("Synthetic Data: The query results are equal")
         else:
             synthetic_output = Output.NEQUAL
+            synthetic_nequal_queries.append(orig)
             print("Synthetic Data: The query results are not equal")
     except Exception as e:
         synthetic_output = Output.INCONCLUSIVE
+        synthetic_error_queries.append(orig)
         print("Synthetic Data: Optimized query is not supported in DuckDB")
 
     return synthetic_output
@@ -80,7 +89,15 @@ if __name__ == "__main__":
     parser.add_argument("--workload_path", type=str)
     parser.add_argument("--schema_path", type=str, default=None)
     parser.add_argument("--load_path", type=str, default=None)
+    parser.add_argument("--output_path", type=str, default=None)
     args = parser.parse_args()
+
+    qed_equal_queries = []
+    qed_nequal_queries = []
+    qed_cannotdet_queries = []
+    synthetic_equal_queries = []
+    synthetic_nequal_queries = []
+    synthetic_error_queries = []
 
     # load schema and table data
     conn, schema = load_schema_and_data(args.schema_path, args.load_path)
@@ -125,7 +142,7 @@ if __name__ == "__main__":
             # ---------- QED STAGE -----------
             # --------------------------------
 
-            qed_output = qed(schema, orig, optimized)
+            qed_output = qed(schema, orig, optimized, qed_equal_queries, qed_nequal_queries, qed_cannotdet_queries)
             if qed_output == Output.EQUAL:
                 qed_equals += 1
             elif qed_output == Output.NEQUAL:
@@ -137,7 +154,7 @@ if __name__ == "__main__":
             # ----- SYNTHETIC DATA STAGE -----
             # --------------------------------
 
-            synthetic_output = synthetic_data(conn, orig, optimized)
+            synthetic_output = synthetic_data(conn, orig, optimized, synthetic_equal_queries, synthetic_nequal_queries, synthetic_error_queries)
             if synthetic_output == Output.EQUAL:
                 equals += 1
             elif synthetic_output == Output.NEQUAL:
@@ -171,3 +188,40 @@ if __name__ == "__main__":
     print(f"QED + Synthetic Stages Agree:       {agrees}")
     print(f"QED + Synthetic Stages Disagree:    {disagrees}")
     print("")
+
+    if args.output_path is not None:
+        with open(args.output_path, 'w') as f:
+            f.write(f"Total valid queries:                {equals + nequals + errors}\n")
+            f.write(f"QED - Equals:                       {qed_equals}\n")
+            f.write(f"QED - Not Equals:                   {qed_nequals}\n")
+            f.write(f"QED - Cannot Be Determined:         {qed_cannotdet}\n")
+            f.write(f"Synthetic Data - Equals:            {equals}\n")
+            f.write(f"Synthetic Data - Not Equals:        {nequals}\n")
+            f.write(f"Synthetic Data - Errors:            {errors}\n")
+            f.write(f"QED + Synthetic Stages Agree:       {agrees}\n")
+            f.write(f"QED + Synthetic Stages Disagree:    {disagrees}\n")
+
+            f.write(f"--------------------------------------\n")
+            f.write(f"QED Equal Queries:                  {len(qed_equal_queries)}\n")
+            for query in qed_equal_queries:
+                f.write(f"  Query: {query}\n")
+            f.write(f"--------------------------------------\n")
+            f.write(f"QED Not Equal Queries:              {len(qed_nequal_queries)}\n")
+            for query in qed_nequal_queries:
+                f.write(f"  Query: {query}\n")
+            f.write(f"--------------------------------------\n")
+            f.write(f"QED Cannot Determine Queries:       {len(qed_cannotdet_queries)}\n")
+            for query in qed_cannotdet_queries:
+                f.write(f"  Query: {query}\n")
+            f.write(f"--------------------------------------\n")
+            f.write(f"Synthetic Equal Queries:            {len(synthetic_equal_queries)}\n")
+            for query in synthetic_equal_queries:
+                f.write(f"  Query: {query}\n")
+            f.write(f"--------------------------------------\n")
+            f.write(f"Synthetic Not Equal Queries:        {len(synthetic_nequal_queries)}\n")
+            for query in synthetic_nequal_queries:
+                f.write(f"  Query: {query}\n")
+            f.write(f"--------------------------------------\n")
+            f.write(f"Synthetic Error Queries:            {len(synthetic_error_queries)}\n")
+            for query in synthetic_error_queries:
+                f.write(f"  Query: {query}\n")

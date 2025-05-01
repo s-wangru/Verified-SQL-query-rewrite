@@ -2,6 +2,7 @@ import re
 import random
 from faker import Faker
 import argparse
+import os
 
 
 fake = Faker()
@@ -74,16 +75,34 @@ def generate_data(schema_path, output_path, num_rows):
 
                 if match:
                     table_name = match.group(1)
+                    os.makedirs(output_path, exist_ok=True)
                     generate_dat_file(ind_schema, num_rows, output_path + '/' + table_name + ".dat")
                     print(f"Generated {num_rows} rows for table {table_name} in {output_path}/{table_name}.dat")
                 else:
                     raise ValueError("Table name not found in the schema.")
+                
+def generate_copy_statements(schema_path, data_csv_path, load_output_path):
+    with open(schema_path, 'r') as f:
+        schema_sql = f.read()
+
+    with open(load_output_path, 'w') as f:
+        table_pattern = re.compile(r'CREATE TABLE\s+(\w+)', re.IGNORECASE)
+        tables = table_pattern.findall(schema_sql)
+
+        for table in tables:
+            statement = f"COPY {table} FROM '{data_csv_path}/{table}.dat' (DELIMITER '|', HEADER, IGNORE_ERRORS);"
+            f.write(statement + '\n')
+
+        print(f"SQL file written to: {load_output_path}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate optimized SQL queries.")
+    parser = argparse.ArgumentParser(description="Generate synthetic data to test query equivalence")
     parser.add_argument("--schema_path", type=str, default=None)
-    parser.add_argument("--output_path", type=str, default=None)
+    parser.add_argument("--data_output_path", type=str, default=None)
     parser.add_argument("--num_rows", type=int, default=100)
+    parser.add_argument("--load_output_path", type=str, default=None)
     args = parser.parse_args()
 
-    generate_data(args.schema_path, args.output_path, args.num_rows)
+    generate_data(args.schema_path, args.data_output_path, args.num_rows)
+    if args.load_output_path:
+        generate_copy_statements(args.schema_path, args.load_output_path)
