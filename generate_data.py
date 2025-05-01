@@ -105,4 +105,4 @@ if __name__ == "__main__":
 
     generate_data(args.schema_path, args.data_output_path, args.num_rows)
     if args.load_output_path:
-        generate_copy_statements(args.schema_path, args.load_output_path)
+        generate_copy_statements(args.schema_path, args.data_output_path, args.load_output_path)

@@ -4,14 +4,14 @@
 schema_shuffle.py
 
 Shuffle SQL schema identifiers and definitions, load nouns from an external file,
-rename .tbl files, and rewrite a separate load SQL file to use the new table names.
+rename .dat files, and rewrite a separate load SQL file to use the new table names.
 
 Usage:
     python schema_shuffle.py \
         --schema <input_schema.sql> [--output-schema <shuffled_schema.sql>] \
         --load-sql <input_load.sql> [--output-load-sql <rewritten_load.sql>] \
         --nouns-file <nouns.txt> \
-        [--tbl-dir <input_tbl_folder> --output-tbl-dir <output_tbl_folder>]
+        [--dat-dir <input_dat_folder> --output-dat-dir <output_dat_folder>]
 
 Options:
   --schema             Path to original schema SQL file (required).
@@ -19,8 +19,8 @@ Options:
   --load-sql           Path to original load SQL file whose table names should be rewritten (required).
   --output-load-sql    Path for rewritten load SQL (default: rewritten_load.sql).
   --nouns-file, -n     Text file containing nouns (one per line) for identifier replacement (required).
-  --tbl-dir            Directory of .tbl files named after original tables.
-  --output-tbl-dir     Directory to write renamed .tbl files.
+  --dat-dir            Directory of .dat files named after original tables.
+  --output-dat-dir     Directory to write renamed .dat files.
 """
 import re
 import random
@@ -85,10 +85,10 @@ def build_mapping(table_names, column_names, nouns):
     random.shuffle(pool)
     mapping = {}
     # Map tables
-    for tbl in table_names:
+    for dat in table_names:
         if not pool:
             raise RuntimeError("Ran out of nouns mapping tables.")
-        mapping[tbl] = pool.pop()
+        mapping[dat] = pool.pop()
     # Map columns
     for col in column_names:
         if col in mapping:
@@ -119,35 +119,35 @@ def shuffle_definitions(sql):
     return '\n\n'.join(blocks)
 
 
-def rename_tbl_files(mapping, tbl_dir, output_tbl_dir):
-    """Copy and rename .tbl files based on table mapping."""
-    if not os.path.isdir(tbl_dir):
-        raise NotADirectoryError(f".tbl directory not found: {tbl_dir}")
-    os.makedirs(output_tbl_dir, exist_ok=True)
-    for fname in os.listdir(tbl_dir):
-        if not fname.lower().endswith('.tbl'):
+def rename_dat_files(mapping, dat_dir, output_dat_dir):
+    """Copy and rename .dat files based on table mapping."""
+    if not os.path.isdir(dat_dir):
+        raise NotADirectoryError(f".dat directory not found: {dat_dir}")
+    os.makedirs(output_dat_dir, exist_ok=True)
+    for fname in os.listdir(dat_dir):
+        if not fname.lower().endswith('.dat'):
             continue
         orig = os.path.splitext(fname)[0]
         new = mapping.get(orig)
         if new:
             shutil.copy2(
-                os.path.join(tbl_dir, fname),
-                os.path.join(output_tbl_dir, new + '.tbl')
+                os.path.join(dat_dir, fname),
+                os.path.join(output_dat_dir, new + '.dat')
             )
-            print(f"Copied: {fname} -> {new}.tbl")
+            print(f"Copied: {fname} -> {new}.dat")
         else:
             print(f"Skipping {fname}: no mapping")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Shuffle schema, rewrite load SQL, and rename .tbl files.")
+    parser = argparse.ArgumentParser(description="Shuffle schema, rewrite load SQL, and rename .dat files.")
     parser.add_argument('--schema', required=True, help="Input schema SQL file")
     parser.add_argument('--output-schema', default='shuffled_schema.sql', help="Shuffled schema output file")
     parser.add_argument('--load-sql', required=True, help="Input load SQL to rewrite table names")
     parser.add_argument('--output-load-sql', default='rewritten_load.sql', help="Rewritten load SQL output file")
     parser.add_argument('-n', '--nouns-file', default="nouns.txt", help="File with nouns (one per line)")
-    parser.add_argument('--tbl-dir', help="Directory of .tbl files to rename")
-    parser.add_argument('--output-tbl-dir', help="Directory for renamed .tbl files")
+    parser.add_argument('--dat-dir', help="Directory of .dat files to rename")
+    parser.add_argument('--output-dat-dir', help="Directory for renamed .dat files")
     args = parser.parse_args()
 
     # Paths
@@ -160,9 +160,9 @@ def main():
     # Load data
     nouns = load_nouns(args.nouns_file)
     schema_sql = load_file(schema_in)
-    tbls = extract_table_names(schema_sql)
+    dats = extract_table_names(schema_sql)
     cols = extract_column_names(schema_sql)
-    mapping = build_mapping(tbls, cols, nouns)
+    mapping = build_mapping(dats, cols, nouns)
 
     new_schema = shuffle_definitions(replace_identifiers(schema_sql, mapping))
     save_file(new_schema, schema_out)
@@ -177,8 +177,8 @@ def main():
     save_file(new_load, load_out)
     print(f"Rewritten load SQL written to {load_out}")
 
-    if args.tbl_dir and args.output_tbl_dir:
-        rename_tbl_files(mapping, args.tbl_dir, args.output_tbl_dir)
+    if args.dat_dir and args.output_dat_dir:
+        rename_dat_files(mapping, args.dat_dir, args.output_dat_dir)
 
 if __name__ == '__main__':
     main()
