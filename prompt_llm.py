@@ -86,6 +86,8 @@ def extract_schema_columns(sql):
 
 def compute_stats(dat_dir, schema_sql):
     import duckdb
+    with open(schema_sql, 'r', encoding='utf-8') as f:
+        schema_sql = f.read().strip()
     schema_cols = extract_schema_columns(schema_sql)
     stats = {}
     con = duckdb.connect(database=':memory:')
@@ -130,12 +132,15 @@ def main():
         schema = f.read().strip()
 
     stats_map = compute_stats(args.dat_dir, schema)
+    stats_text = compute_stats(args.dat_dir, args.schema_path)
 
     pairs = generate_query_pairs(args.workload_path, schema, stats_map)
+    workload_stats = schema + '\n' + stats_text
+
+    # pairs = generate_query_pairs(args.workload_path, workload_stats)
 
     output_file = os.path.join(args.workload_path, 'optimized_queries.txt')
-    write_output_file(pairs, output_file)
+    # write_output_file(pairs, output_file)
 
 if __name__ == "__main__":
     main()
-

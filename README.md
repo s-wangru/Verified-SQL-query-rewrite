@@ -32,12 +32,16 @@ python prompt_llm.py --workload_path "dsb/queries" --schema_path "dsb/queries/cr
 ```
 
 ```sh
-python generate_data.py --schema_path "dsb/queries/create_tables.sql" --output_path "data"
+python generate_data.py --schema_path "dsb/queries/create_tables.sql" --data_output_path "data"
 ```
 
 ```sh
 python check_equivalence.py --workload_path "dsb/queries/optimized_queries.txt" --schema_path "dsb/queries/create_tables.sql" --load_path "dsb/queries/load_tables.sql"
 ```
+
+## Shuffle Schemas
+
+This is for benchmarking usage to determine whether the LLM's performance is due to it having seen the queries before (possibility for more comon benchmarks like TPC-H, TPC-DS, etc.) or it actually has the ability to rewrite the query. Refer to `shuffle` folder's documentation for how to use.
 
 ## Tests & Code Coverage
 Install the necessary packages:
@@ -48,27 +52,4 @@ pip install pytest pytest-cov pandas
 To run all unit tests & check code coverage:
 ```sh
 pytest --cov=. --cov-config=.coveragerc
-```
----
-*As of 04/22/2025, code coverage report is as below:*
-```sh
-Name                   Stmts   Miss  Cover
-------------------------------------------
-check_equivalence.py     123     65    47%
-generate_data.py          69      8    88%
-prompt_llm.py             44     23    48%
-------------------------------------------
-TOTAL                    236     96    59%
-```
-
-
-## For shuffling schemas
-
-```sh
-cd shuffle
-python schema_rewrite.py ../dsb/queries/create_tables.sql ../dsb_shuffle/cs.sql ../dsb/table ../dsb_shuffle/table 
-```
-
-```sh
-python query_rewrite.py ../dsb_shuffle/cs_mapping.json ../dsb/queries ../dsb_shuffle/queries -c
 ```
