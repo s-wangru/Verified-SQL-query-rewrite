@@ -1,0 +1,15 @@
+23: select distinct viewer_id as id from views group by viewer_id, view_date having count(distinct article_id) > 1 order by viewer_id;
+18: select distinct viewer_id as id from views group by viewer_id, view_date having count(distinct article_id) > 1;
+1: select distinct v.viewer_id as id from views as v group by v.view_date, v.viewer_id having count(distinct v.article_id) > 1 order by v.viewer_id;
+167: select distinct v.viewer_id as id from views as v group by viewer_id, view_date having count(distinct article_id) > 1;
+77: select distinct a.viewer_id as id from (select viewer_id, view_date, count(distinct article_id) as article_count from views group by viewer_id, view_date) as a where a.article_count > 1 order by a.viewer_id;
+6: select distinct viewer_id as id from views group by view_date, viewer_id having count(distinct article_id) > 1 order by viewer_id asc;
+53: select distinct viewer_id as id from views as v1 group by viewer_id, view_date having count(distinct article_id) > 1;
+93: select distinct viewer_id as id from (select distinct viewer_id, view_date, count(distinct article_id) as view_cnts_per_day from views as v2 group by 1, 2) as x where view_cnts_per_day > 1 order by viewer_id;
+9: select distinct viewer_id as id from (select viewer_id, view_date, count(distinct article_id) as art_num from views group by viewer_id, view_date) as t1 where art_num > 1 order by viewer_id;
+101: select distinct viewer_id as id from (select viewer_id, view_date, count(distinct article_id) as views from views group by viewer_id, view_date) as t where views > 1 order by viewer_id asc;
+52: select distinct viewer_id as id from views group by viewer_id, view_date having count(distinct article_id) >= 2;
+132: select distinct viewer_id as id from views group by viewer_id, view_date having (count(viewer_id) > 1 and count(distinct article_id) > 1);
+87: select distinct temp.viewer_id as id from (select viewer_id, view_date, count(distinct article_id) as total_article from views group by viewer_id, view_date having count(distinct article_id) > 1) as temp order by temp.viewer_id;
+24: select distinct viewer_id as id from views group by viewer_id, view_date having count(distinct article_id) > 1 order by viewer_id asc;
+17: select distinct viewer_id as id from views group by view_date, viewer_id having count(distinct article_id) > 1 order by viewer_id;

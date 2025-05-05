@@ -1,0 +1,1 @@
+255,"SELECT U.user_id AS buyer_id, U.join_date, COUNT(O.order_date) AS orders_in_2019 FROM Users U LEFT OUTER JOIN Orders O ON U.user_id = O.buyer_id WHERE O.order_date BETWEEN '2019-01-01' AND '2019-12-31' GROUP BY U.user_id, U.join_date"

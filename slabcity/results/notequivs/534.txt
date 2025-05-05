@@ -1,0 +1,8 @@
+97: select a1.player_id, a1.event_date, sum(a1.games_played) over (partition by player_id order by event_date) as games_played_so_far from activity as a1 group by a1.player_id, a1.event_date order by a1.player_id, a1.event_date;
+124: select player_id, event_date, sum(games_played) over (partition by player_id order by event_date) as games_played_so_far from activity group by 1, 2;
+133: select player_id, event_date, sum(games_played) over (partition by player_id order by event_date asc) as games_played_so_far from activity group by player_id, event_date;
+141: select player_id, event_date, sum(games_played) over (partition by player_id order by event_date asc) as games_played_so_far from activity group by 1, 2;
+29: select player_id, event_date, sum(games_played) over (partition by player_id order by event_date) as games_played_so_far from activity group by player_id, event_date order by player_id, event_date;
+56: select player_id, event_date, sum(games_played) over (partition by player_id order by event_date) as games_played_so_far from activity group by player_id, event_date;
+22: select player_id, event_date, sum(games_played) over (partition by player_id order by event_date rows between unbounded preceding and current row) as games_played_so_far from activity group by 1, 2;
+136: select player_id, event_date, sum(games_played) as games_played_so_far from (select a.player_id, a.event_date, b.games_played from activity as a left outer join activity as b on (a.player_id = b.player_id and b.event_date <= a.event_date)) as a group by player_id, event_date;

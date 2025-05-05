@@ -1,0 +1,16 @@
+108: select t1.follower as follower, count(distinct t2.follower) as num from follow as t1 join follow as t2 on t1.follower = t2.followee group by t1.follower;
+155: select a.followee as follower, count(distinct a.follower) as num from follow as a join (select follower from follow) as t on a.followee = t.follower group by a.followee order by a.followee;
+3: select distinct f1.follower, count(distinct f2.follower) as num from follow as f1 join follow as f2 on f1.follower = f2.followee group by f1.follower order by f1.follower;
+25: select a.follower as follower, count(distinct b.follower) as num from follow as a join follow as b on a.follower = b.followee group by a.follower order by a.follower;
+51: select f1.follower, count(distinct f2.follower) as num from (select distinct follower from follow) as f1 join follow as f2 on f1.follower = f2.followee group by f1.follower order by f1.follower;
+212: select distinct follower, num from follow join (select followee, count(distinct follower) as num from follow group by followee) as f3 on follow.follower = f3.followee order by follower;
+153: select a.followee as follower, count(distinct a.follower) as num from follow as a join (select distinct follower from follow) as b on a.followee = b.follower group by a.followee;
+36: select distinct b.followee as follower, count(distinct b.follower) as num from follow as a join follow as b on a.follower = b.followee group by a.follower, b.followee order by b.followee;
+369: select t1.followee as follower, count(distinct t1.follower) as num from follow as t1 join (select distinct follower from follow) as t2 on t1.followee = t2.follower group by t1.followee;
+52: select f1.follower, count(distinct f2.follower) as num from follow as f1 join follow as f2 on f1.follower = f2.followee group by f1.follower order by f1.follower;
+239: select f1.follower as follower, count(distinct f2.follower) as num from follow as f1 join follow as f2 on f1.follower = f2.followee group by f1.follower order by f1.follower;
+338: select followee as follower, count(distinct follower) as num from follow as f join (select distinct follower as dfs from follow) as df on f.followee = df.dfs group by followee;
+363: select followers.follower, followees.num from (select follower from follow group by follower) as followers join (select followee, count(distinct follower) as num from follow group by followee) as followees on followers.follower = followees.followee order by follower;
+110: select t1.follower, count(distinct t2.follower) as num from follow as t1 join follow as t2 on t1.follower = t2.followee group by t1.follower;
+225: select f1.followee as follower, count(distinct f1.follower) as num from follow as f1 join follow as f2 on f1.followee = f2.follower group by f1.followee;
+27: select a.follower, count(distinct b.follower) as num from follow as a join follow as b on a.follower = b.followee group by a.follower;

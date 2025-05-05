@@ -1,0 +1,3 @@
+270: select p.name, sum(i.rest) as rest, sum(i.paid) as paid, sum(i.canceled) as canceled, sum(i.refunded) as refunded from product as p join invoice as i on i.product_id = p.product_id group by p.product_id order by p.name;
+283: select product.name, sum(rest) as rest, sum(paid) as paid, sum(canceled) as canceled, sum(refunded) as refunded from invoice left outer join product on invoice.product_id = product.product_id group by product.product_id order by product.name;
+269: select p.name, sum(i.rest) as rest, sum(i.paid) as paid, sum(i.canceled) as canceled, sum(i.refunded) as refunded from product as p right outer join invoice as i on p.product_id = i.product_id group by p.product_id order by name;

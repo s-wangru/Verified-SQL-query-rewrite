@@ -1,0 +1,3 @@
+99: select report_reason, count(report_reason) as report_count from (select distinct t1.post_id, t1.action, t1.extra as report_reason, t1.action_date from actions as t1 where (t1.action_date = '2019-07-04' and t1.action = 'report')) as t2 group by t2.report_reason;
+237: select extra as report_reason, count(extra) as report_count from (select distinct post_id, action_date, action, extra from actions) as y where (action_date = '2019-07-04' and action = 'report') group by extra;
+234: select extra as report_reason, count(extra) as report_count from (select distinct post_id, action_date, action, extra from actions) as x where (action_date = '2019-07-04' and action = 'report') group by extra;

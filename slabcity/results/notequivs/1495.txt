@@ -1,0 +1,2 @@
+139: select distinct c.title as title from tvprogram as t join content as c on t.content_id = c.content_id where (t.program_date >= '2020-06-01' and t.program_date <= '2020-06-30' and c.kids_content = 'Y' and c.content_type = 'Movies');
+107: select distinct t1.title from content as t1 join tvprogram as t2 on t1.content_id = t2.content_id where (t1.kids_content = 'Y' and t1.content_type = 'Movies' and t2.program_date >= '2020-06-01' and t2.program_date < '2020-07-01');

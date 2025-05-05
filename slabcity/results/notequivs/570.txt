@@ -1,0 +1,9 @@
+155: select e1.name from employee as e1 join employee as e2 on e2.managerid = e1.id group by e1.id having count(e2.id) >= 5;
+45: select e1.name from employee as e1 left outer join employee as e2 on e1.id = e2.managerid group by e1.id having count(e2.id) >= 5;
+172: select e2.name from employee as e1 left outer join employee as e2 on e1.managerid = e2.id group by e2.id having count(e2.id) >= 5;
+160: select e2.name from employee as e1 join employee as e2 on e1.managerid = e2.id group by e2.id having count(e1.id) >= 5;
+123: select b.name from employee as a left outer join employee as b on a.managerid = b.id group by b.id having count(b.id) >= 5;
+117: select a.name from employee as a join employee as b on a.id = b.managerid group by a.id having count(b.managerid) >= 5;
+12: select manager.name from employee as manager left outer join employee on employee.managerid = manager.id group by manager.id having count(manager.id) >= 5;
+56: select e2.name from employee as e1 join employee as e2 on e1.managerid = e2.id group by e2.id having count(e2.id) >= 5;
+159: select e2.name from employee as e1 join employee as e2 on e1.managerid = e2.id group by e2.id having count(distinct e1.id) >= 5;

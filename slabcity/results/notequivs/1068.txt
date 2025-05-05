@@ -1,0 +1,16 @@
+106: select t2.product_name, t1.year, t1.price from sales as t1 left outer join product as t2 on t1.product_id = t2.product_id order by year;
+184: select p.product_name, s.year, s.price from (select distinct product_id, year, price from sales) as s join product as p on s.product_id = p.product_id;
+124: select t2.product_name, t1.year, t1.price from sales as t1 left outer join product as t2 on t1.product_id = t2.product_id;
+281: select product_name, sales.year, price from sales left outer join product on sales.product_id = product.product_id;
+78: select product_name, year, price from sales left outer join product on sales.product_id = product.product_id;
+11: select p.product_name, s.year, s.price from sales as s left outer join product as p on s.product_id = p.product_id;
+117: select p.product_name, year, price from sales as s left outer join product as p on s.product_id = p.product_id;
+141: select p.product_name, year, price from sales as s left outer join product as p on p.product_id = s.product_id;
+68: select product_name, year, price from sales as s left outer join product as p on s.product_id = p.product_id;
+190: select p.product_name as product_name, s.year as year, s.price as price from sales as s left outer join product as p on p.product_id = s.product_id;
+194: select p.product_name, s.year, min(price) as price from sales as s join product as p on p.product_id = s.product_id group by p.product_name, s.year, sale_id;
+102: select product_name, year, price from sales as p1 left outer join product as p2 on p1.product_id = p2.product_id;
+182: select p.product_name, s.price, s.year from sales as s left outer join product as p on s.product_id = p.product_id;
+21: select b.product_name, a.year, a.price from sales as a left outer join product as b on a.product_id = b.product_id;
+94: select product_name, year, price from sales as s left outer join product as p on s.product_id = p.product_id order by year;
+77: select product_name, year, price from sales left outer join product on product.product_id = sales.product_id;
