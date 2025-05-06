@@ -40,7 +40,10 @@ def load_nouns(path):
     nouns = [line.strip() for line in open(path, 'r', encoding='utf-8') if line.strip()]
     if not nouns:
         raise ValueError(f"No nouns found in {path}")
+    random.seed(42)  # For reproducibility
+    random.shuffle(nouns)
     return nouns
+
 
 
 def load_file(path):
