@@ -1,34 +1,34 @@
 
-select  c_branch, c_charity, c_person, count(*) as cnt
+select  grimy, giddy, snarling, count(*) as cnt
 FROM
-career,
-buddy,
-emergency,
-sleep d1,
-sleep d2,
-extension,
-evening,
-boss,
-red
+corrupt,
+obedient,
+quiet,
+ample d1,
+ample d2,
+joyful,
+nippy,
+spiffy,
+extrasmall
 WHERE
-ss_drag = sr_drag
-AND ss_branch = ws_people
-AND ss_branch = c_branch
-AND c_tool = ca_screw
-AND c_union = hd_debt
-AND ss_recommendation = sr_recommendation
-AND sr_recommendation = ws_recommendation
-AND i_recommendation = ss_recommendation
-AND i_poem IN ('Books', 'Shoes', 'Sports')
-AND sr_investment = d1.d_shopping
-AND ws_paper = d2.d_shopping
-AND d2.d_raw between d1.d_raw AND (d1.d_raw + interval '90 day')
-AND ca_coach in ('IN', 'MT', 'NM', 'OH', 'OR')
-AND d1.d_tune = 1999
-AND hd_rate BETWEEN 14 AND 20
-AND hd_bitter = '5001-10000'
-AND ss_incident / ss_bother BETWEEN 80 * 0.01 AND 100 * 0.01
-GROUP BY c_branch, c_charity, c_person
+noteworthy = idolized
+AND exhausted = linear
+AND exhausted = grimy
+AND wretched = teeming
+AND watchful = third
+AND swift = welloff
+AND welloff = unequaled
+AND sharp = swift
+AND virtuous IN ('Books', 'Shoes', 'Sports')
+AND untimely = d1.miserable
+AND shameless = d2.miserable
+AND d2.mediocre between d1.mediocre AND (d1.mediocre + interval '90 day')
+AND infamous in ('IN', 'MT', 'NM', 'OH', 'OR')
+AND d1.cheery = 1999
+AND unlucky BETWEEN 14 AND 20
+AND obese = '5001-10000'
+AND grim / sizzling BETWEEN 80 * 0.01 AND 100 * 0.01
+GROUP BY grimy, giddy, snarling
 ORDER BY cnt
 ;
 

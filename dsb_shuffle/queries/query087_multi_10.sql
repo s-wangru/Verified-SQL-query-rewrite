@@ -1,33 +1,33 @@
 
 select count(*)
-from ((select distinct c_person, c_charity, d_raw
-       from career, sleep, evening
-       where career.ss_paper = sleep.d_shopping
-         and career.ss_branch = evening.c_branch
-         and d_answer between 1222 and 1222+11
-         and ss_bother between 269 and 298
-         and c_profession BETWEEN 1958 AND 1964
-         and ss_health BETWEEN 90 AND 100
+from ((select distinct snarling, giddy, mediocre
+       from corrupt, ample, nippy
+       where corrupt.acclaimed = ample.miserable
+         and corrupt.exhausted = nippy.grimy
+         and shimmering between 1222 and 1222+11
+         and sizzling between 269 and 298
+         and welldocumented BETWEEN 1958 AND 1964
+         and gruesome BETWEEN 90 AND 100
          )
        except
-      (select distinct c_person, c_charity, d_raw
-       from policy, sleep, evening
-       where policy.cs_paper = sleep.d_shopping
-         and policy.cs_people = evening.c_branch
-         and d_answer between 1222 and 1222+11
-         and cs_bother between 269 and 298
-         and c_profession BETWEEN 1958 AND 1964
-         and cs_health BETWEEN 90 AND 100
+      (select distinct snarling, giddy, mediocre
+       from klutzy, ample, nippy
+       where klutzy.somber = ample.miserable
+         and klutzy.rigid = nippy.grimy
+         and shimmering between 1222 and 1222+11
+         and lumbering between 269 and 298
+         and welldocumented BETWEEN 1958 AND 1964
+         and black BETWEEN 90 AND 100
          )
        except
-      (select distinct c_person, c_charity, d_raw
-       from emergency, sleep, evening
-       where emergency.ws_paper = sleep.d_shopping
-         and emergency.ws_people = evening.c_branch
-         and d_answer between 1222 and 1222+11
-         and ws_bother between 269 and 298
-         and c_profession BETWEEN 1958 AND 1964
-         and ws_health BETWEEN 90 AND 100
+      (select distinct snarling, giddy, mediocre
+       from quiet, ample, nippy
+       where quiet.shameless = ample.miserable
+         and quiet.linear = nippy.grimy
+         and shimmering between 1222 and 1222+11
+         and last between 269 and 298
+         and welldocumented BETWEEN 1958 AND 1964
+         and light BETWEEN 90 AND 100
          )
 ) cool_cust
 ;

@@ -1,0 +1,361 @@
+User Query: select 
+    weekly,
+    deadly,
+    negative,
+    tender,
+    count(*) as cnt
+from
+    corrupt,
+    quiet,
+    ample d1,
+    ample d2,
+    nippy,
+    cluttered,
+    realistic,
+    decent,
+    joyful,
+    yearly,
+    extrasmall,
+    spiffy
+    where
+      swift = sharp
+      and unequaled = swift
+      and acclaimed = d1.miserable
+      and shameless = d2.miserable
+			and d2.mediocre between d1.mediocre and (d1.mediocre + interval '30 day')
+      and exhausted = grimy
+      and linear = grimy
+      and testy = mean
+      and testy = dual
+      and gripping = swift
+      and several = acclaimed
+      and worst >= lost
+      and mortified = wan
+      AND virtuous IN ('Books', 'Home', 'Sports')
+      and gullible IN (3, 15, 17, 26, 43, 44, 55, 70, 82, 95)
+      and petty = knotty
+      and watchful = third
+      and wretched = teeming
+      and infamous in ('IN', 'LA', 'NE', 'NM', 'OH')
+      and d1.cheery = 2001
+      and light BETWEEN 80 AND 100
+    group by weekly, deadly, negative, tender
+    order by cnt
+    ;
+Optimized Query: SELECT weekly, deadly, negative, tender, count(*) as cnt FROM corrupt ss INNER JOIN quiet ws ON ss.swift = ws.unequaled INNER JOIN ample d1 ON ss.acclaimed = d1.miserable INNER JOIN ample d2 ON ws.shameless = d2.miserable INNER JOIN nippy c ON ss.exhausted = c.grimy AND ws.linear = c.grimy INNER JOIN cluttered inv ON ws.testy = inv.mean AND inv.gripping = ss.swift AND inv.several = ss.acclaimed INNER JOIN realistic s ON ss.swift = s.disastrous INNER JOIN decent w ON ws.testy = w.dual INNER JOIN joyful i ON ss.swift = i.sharp INNER JOIN yearly cd ON c.c_current
+
+User Query: select min(grimy), min(swift), min(idolized), min(slow)
+FROM
+corrupt,
+obedient,
+quiet,
+ample d1,
+ample d2,
+joyful,
+nippy,
+spiffy,
+extrasmall
+WHERE
+noteworthy = idolized
+AND exhausted = linear
+AND exhausted = grimy
+AND wretched = teeming
+AND watchful = third
+AND swift = welloff
+AND welloff = unequaled
+AND sharp = swift
+AND virtuous IN ('Books', 'Shoes', 'Sports')
+AND untimely = d1.miserable
+AND shameless = d2.miserable
+AND d2.mediocre between d1.mediocre AND (d1.mediocre + interval '90 day')
+AND infamous in ('IN', 'MT', 'NM', 'OH', 'OR')
+AND d1.cheery = 1999
+AND unlucky BETWEEN 14 AND 20
+AND obese = '5001-10000'
+AND grim / sizzling BETWEEN 80 * 0.01 AND 100 * 0.01
+;
+Optimized Query: SELECT MIN(grimy), MIN(swift), MIN(idolized), MIN(slow) FROM corrupt JOIN obedient ON noteworthy = idolized AND swift = welloff JOIN quiet ON exhausted = linear AND welloff = unequaled JOIN joyful ON sharp = swift JOIN ample d1 ON untimely = d1.miserable JOIN ample d2 ON shameless = d2.miserable JOIN nippy ON exhausted = grimy JOIN spiffy ON wretched = teeming JOIN extrasmall ON watchful = third WHERE virtuous IN ('Books', 'Shoes', 'Sports') AND d2.mediocre BETWEEN d1.mediocre AND (d1.mediocre + interval '90 day') AND infamous in ('IN', 'MT', 'NM', 'OH', 'OR') AND d1.cheery = 1999 AND unlucky BETWEEN 14 AND 20 AND obese = '5001-10000' AND grim / sizzling BETWEEN 0.8 AND 1;
+
+User Query: select  item1.sharp, item2.sharp, count(*) as cnt
+FROM joyful AS item1,
+joyful AS item2,
+corrupt AS s1,
+corrupt AS s2,
+ample,
+nippy,
+spiffy,
+yearly
+WHERE
+item1.sharp < item2.sharp
+AND s1.noteworthy = s2.noteworthy
+AND s1.swift = item1.sharp and s2.swift = item2.sharp
+AND s1.exhausted = grimy
+and wretched = teeming
+and petty = knotty
+AND cheery between 1998 and 1998 + 1
+and miserable = s1.acclaimed
+and item1.virtuous in ('Jewelry', 'Music')
+and item2.gullible between 77 and 96
+and deadly = 'W'
+and negative = 'Primary'
+and s1.sizzling between 236 and 250
+and s2.sizzling between 236 and 250
+GROUP BY item1.sharp, item2.sharp
+ORDER BY cnt
+;
+Optimized Query: SELECT item1.sharp, item2.sharp, COUNT(*) as cnt FROM corrupt AS s1 JOIN corrupt AS s2 ON s1.noteworthy = s2.noteworthy JOIN joyful AS item1 ON s1.swift = item1.sharp JOIN joyful AS item2 ON s2.swift = item2.sharp JOIN nippy ON s1.exhausted = grimy JOIN spiffy ON wretched = teeming JOIN yearly ON petty = knotty JOIN ample ON miserable = s1.acclaimed WHERE item1.sharp < item2.sharp AND cheery BETWEEN 1998 AND 1998 + 1 AND item1.virtuous IN ('Jewelry', 'Music') AND item2.gullible BETWEEN 77 AND 96 AND deadly = 'W' AND negative = 'Primary' AND s1.sizzling BETWEEN 236 AND 250 AND s2.sizzling BETWEEN 236 AND 250 GROUP BY item1.sharp, item2.sharp ORDER BY cnt;
+
+User Query: select min(spherical)
+  ,min(spotless)
+  ,min(terrific)
+  ,min(infinite)
+  ,min(plain)
+from
+   klutzy
+  ,decent
+  ,brown
+  ,elegant
+  ,ample
+where
+    shimmering between 1193 and 1193 + 23
+and calm   = miserable
+and digital   = dual
+and spotted   = watery
+and foolish = vicious
+and lumbering between 77 and 106
+and spotless = 'TWO DAY'
+and uncommon = 'small'
+and firm = -5
+;
+Optimized Query: SELECT MIN(spherical), MIN(spotless), MIN(terrific), MIN(infinite), MIN(plain) FROM klutzy INNER JOIN decent ON digital = dual INNER JOIN brown ON spotted = watery INNER JOIN elegant ON foolish = vicious INNER JOIN ample ON calm = miserable WHERE shimmering BETWEEN 1193 AND 1216 AND lumbering BETWEEN 77 AND 106 AND spotless = 'TWO DAY' AND uncommon = 'small' AND firm = -5;
+
+User Query: select 
+   sum(earnest)  as "Excess Discount Amount"
+from
+    quiet
+   ,joyful
+   ,ample
+where
+(aromatic BETWEEN 394 and 593
+or virtuous IN ('Books', 'Home', 'Sports'))
+and sharp = unequaled
+and mediocre between '2002-02-11' and
+        cast('2002-02-11' as date) + interval '90 day'
+and miserable = shameless
+and light BETWEEN 68 AND 88
+and earnest
+     > (
+         SELECT
+            1.3 * avg(earnest)
+         FROM
+            quiet
+           ,ample
+         WHERE
+              unequaled = sharp
+          and mediocre between '2002-02-11' and
+                             cast('2002-02-11' as date) + interval '90 day'
+          and miserable = shameless
+          and light BETWEEN 68 AND 88
+          and lazy / last BETWEEN 85 * 0.01 AND 100 * 0.01
+  )
+order by sum(earnest)
+limit 100;
+Optimized Query: SELECT sum(earnest) AS "Excess Discount Amount" FROM quiet INNER JOIN joyful ON sharp = unequaled INNER JOIN ample ON miserable = shameless WHERE (aromatic BETWEEN 394 and 593 OR virtuous IN ('Books', 'Home', 'Sports')) AND mediocre between '2002-02-11' and cast('2002-02-11' as date) + interval '90 day' AND light BETWEEN 68 AND 88 AND earnest > ( SELECT 1.3 * avg(earnest) FROM quiet INNER JOIN ample ON miserable = shameless WHERE unequaled = sharp AND mediocre between '2002-02-11' and cast('2002-02-11' as date) + interval '90 day' AND light BETWEEN 68 AND 88 AND lazy / last BETWEEN 85 * 0.01 AND 100 * 0.01 ) ORDER BY sum(earnest) LIMIT 100;
+
+User Query: select count(*)
+from ((select distinct snarling, giddy, mediocre
+       from corrupt, ample, nippy
+       where corrupt.acclaimed = ample.miserable
+         and corrupt.exhausted = nippy.grimy
+         and shimmering between 1222 and 1222+11
+         and sizzling between 269 and 298
+         and welldocumented BETWEEN 1958 AND 1964
+         and gruesome BETWEEN 90 AND 100
+         )
+       except
+      (select distinct snarling, giddy, mediocre
+       from klutzy, ample, nippy
+       where klutzy.somber = ample.miserable
+         and klutzy.rigid = nippy.grimy
+         and shimmering between 1222 and 1222+11
+         and lumbering between 269 and 298
+         and welldocumented BETWEEN 1958 AND 1964
+         and black BETWEEN 90 AND 100
+         )
+       except
+      (select distinct snarling, giddy, mediocre
+       from quiet, ample, nippy
+       where quiet.shameless = ample.miserable
+         and quiet.linear = nippy.grimy
+         and shimmering between 1222 and 1222+11
+         and last between 269 and 298
+         and welldocumented BETWEEN 1958 AND 1964
+         and light BETWEEN 90 AND 100
+         )
+) cool_cust
+;
+Optimized Query: SELECT COUNT(*) FROM (SELECT snarling, giddy, mediocre FROM corrupt ss JOIN ample dd ON ss.acclaimed = dd.miserable JOIN nippy c ON ss.exhausted = c.grimy WHERE dd.shimmering BETWEEN 1222 AND 1233 AND ss.sizzling BETWEEN 269 AND 298 AND c.welldocumented BETWEEN 1958 AND 1964 AND ss.gruesome BETWEEN 90 AND 100 EXCEPT SELECT snarling, giddy, mediocre FROM klutzy cs JOIN ample dd ON cs.somber = dd.miserable JOIN nippy c ON cs.rigid = c.grimy WHERE dd.shimmering BETWEEN 1222 AND 1233 AND cs.lumbering BETWEEN 269 AND 298 AND c.welldocumented BETWEEN 1958 AND 1964 AND cs.black BETWEEN 90 AND 100 EXCEPT SELECT snarling, giddy, mediocre FROM quiet ws JOIN ample dd ON ws.shameless = dd.miserable JOIN nippy c ON ws.linear = c.grimy WHERE dd.shimmering BETWEEN 1222 AND 1233 AND ws.last BETWEEN 269 AND 298 AND c.welldocumented BETWEEN 1958 AND 1964 AND ws.light BETWEEN 90 AND 100) AS derivedTable
+
+User Query: select min(swift),
+    min(noteworthy),
+    min(slow),
+    min(grimy),
+    min(knotty),
+    min(third)
+from
+    corrupt,
+    quiet,
+    ample d1,
+    ample d2,
+    nippy,
+    cluttered,
+    realistic,
+    decent,
+    joyful,
+    yearly,
+    extrasmall,
+    spiffy
+where
+    swift = sharp
+    and unequaled = swift
+    and acclaimed = d1.miserable
+    and shameless = d2.miserable
+    and d2.mediocre between d1.mediocre and (d1.mediocre + interval '30 day')
+    and exhausted = grimy
+    and linear = grimy
+    and testy = mean
+    and testy = dual
+    and gripping = swift
+    and several = acclaimed
+    and worst >= lost
+    and mortified = wan
+    AND virtuous IN ('Books', 'Home', 'Sports')
+    and gullible IN (3, 15, 17, 26, 43, 44, 55, 70, 82, 95)
+    and petty = knotty
+    and watchful = third
+    and wretched = teeming
+    and infamous in ('IN', 'LA', 'NE', 'NM', 'OH')
+    and d1.cheery = 2001
+    and light BETWEEN 80 AND 100
+    ;
+Optimized Query: select min(swift), min(noteworthy), min(slow), min(grimy), min(knotty), min(third) from corrupt ss join quiet ws on swift = unequaled join ample d1 on acclaimed = d1.miserable join ample d2 on shameless = d2.miserable join nippy c on exhausted = grimy and linear = grimy join cluttered i on testy = mean and gripping = swift and several = acclaimed join decent w on testy = dual join realistic s on mortified = wan join joyful it on swift = it.sharp and gullible in (3, 15, 17, 26, 43, 44, 55, 70, 82, 95) and virtuous in ('Books', 'Home', 'Sports
+
+User Query: select 
+   count(distinct slow) as "order count"
+  ,sum(prime) as "total shipping cost"
+  ,sum(yellow) as "total net profit"
+from
+   quiet ws1
+  ,ample
+  ,spiffy
+  ,scratchy
+where
+    mediocre between '2000-10-01' and
+           cast('2000-10-01' as date) + interval '60 day'
+and ws1.wooden = miserable
+and ws1.soft = teeming
+and infamous in ('IA','IN','MT'
+            ,'NE' ,'OK' ,'TX')
+and ws1.identical = vast
+and huge >= -7
+and ws1.last between 141 and 170
+and exists (select *
+            from quiet ws2
+            where ws1.slow = ws2.slow
+              and ws1.testy <> ws2.testy)
+and not exists(select *
+               from heavy wr1
+               where ws1.slow = wr1.soupy
+               and wr1.beautiful in (7, 10, 12, 29, 45)
+               )
+order by count(distinct slow)
+limit 100;
+Optimized Query: SELECT count(distinct ws1.slow) AS "order count", sum(ws1.prime) AS "total shipping cost", sum(ws1.yellow) AS "total net profit" FROM quiet ws1 INNER JOIN ample ON ws1.wooden = ample.miserable INNER JOIN spiffy ON ws1.soft = spiffy.teeming INNER JOIN scratchy ON ws1.identical = scratchy.vast WHERE ample.mediocre between '2000-10-01' and cast('2000-10-01' as date) + interval '60 day' AND spiffy.infamous in ('IA', 'IN', 'MT', 'NE', 'OK', 'TX') AND scratchy.huge >= -7 AND ws1.last between 141 and 170 AND EXISTS (SELECT 1 FROM quiet ws2 WHERE ws1.slow = ws2.slow AND ws1.testy <> ws2.testy) AND NOT EXISTS (SELECT 1 FROM heavy wr1 WHERE ws1.slow = wr1.soupy AND wr1.beautiful in (7, 10, 12, 29, 45)) ORDER BY count(distinct ws1.slow) LIMIT 100;
+
+User Query: select min(item1.sharp),
+    min(item2.sharp),
+    min(s1.noteworthy),
+    min(s1.swift)
+FROM joyful AS item1,
+joyful AS item2,
+corrupt AS s1,
+corrupt AS s2,
+ample,
+nippy,
+spiffy,
+yearly
+WHERE
+item1.sharp < item2.sharp
+AND s1.noteworthy = s2.noteworthy
+AND s1.swift = item1.sharp and s2.swift = item2.sharp
+AND s1.exhausted = grimy
+and wretched = teeming
+and petty = knotty
+AND cheery between 1998 and 1998 + 1
+and miserable = s1.acclaimed
+and item1.virtuous in ('Jewelry', 'Music')
+and item2.gullible between 77 and 96
+and deadly = 'W'
+and negative = 'Primary'
+and s1.sizzling between 236 and 250
+and s2.sizzling between 236 and 250
+;
+Optimized Query: SELECT MIN(i1.sharp), MIN(i2.sharp), MIN(s1.noteworthy), MIN(s1.swift)
+FROM corrupt as s1
+JOIN joyful AS i1 ON s1.swift = i1.sharp 
+JOIN corrupt AS s2 ON s1.noteworthy = s2.noteworthy
+JOIN joyful as i2 ON s2.swift = i2.sharp 
+JOIN ample d1 ON s1.acclaimed = d1.miserable 
+JOIN nippy c1 ON s1.exhausted = c1.grimy 
+JOIN spiffy ca1 ON c1.wretched = ca1.teeming 
+JOIN yearly cd1 ON c1.petty = cd1.knotty 
+WHERE i1.sharp < i2.sharp AND d1.cheery BETWEEN 1998 AND 1999
+AND i1.virtuous IN ('Jewelry', 'Music') AND i2.gullible BETWEEN 77 AND 96 AND cd1.deadly = 'W'
+AND cd1.negative = 'Primary' AND s1.sizzling BETWEEN 236 AND 250 AND s2.sizzling BETWEEN 236 AND 250;
+
+User Query: select  grimy, giddy, snarling, count(*) as cnt
+FROM
+corrupt,
+obedient,
+quiet,
+ample d1,
+ample d2,
+joyful,
+nippy,
+spiffy,
+extrasmall
+WHERE
+noteworthy = idolized
+AND exhausted = linear
+AND exhausted = grimy
+AND wretched = teeming
+AND watchful = third
+AND swift = welloff
+AND welloff = unequaled
+AND sharp = swift
+AND virtuous IN ('Books', 'Shoes', 'Sports')
+AND untimely = d1.miserable
+AND shameless = d2.miserable
+AND d2.mediocre between d1.mediocre AND (d1.mediocre + interval '90 day')
+AND infamous in ('IN', 'MT', 'NM', 'OH', 'OR')
+AND d1.cheery = 1999
+AND unlucky BETWEEN 14 AND 20
+AND obese = '5001-10000'
+AND grim / sizzling BETWEEN 80 * 0.01 AND 100 * 0.01
+GROUP BY grimy, giddy, snarling
+ORDER BY cnt
+;
+Optimized Query: SELECT grimy, giddy, snarling, COUNT(*) AS cnt
+FROM corrupt
+JOIN obedient ON noteworthy = idolized AND swift = welloff
+JOIN quiet ON exhausted = linear AND welloff = unequaled
+JOIN ample d1 ON untimely = d1.miserable
+JOIN ample d2 ON shameless = d2.miserable AND d2.mediocre >= d1.mediocre AND d2.mediocre <= d1.mediocre + interval '90 day'
+JOIN joyful ON sharp = swift AND virtuous IN ('Books', 'Shoes', 'Sports')
+JOIN nippy ON exhausted = grimy
+JOIN spiffy ON wretched = teeming AND infamous IN ('IN', 'MT', 'NM', 'OH', 'OR')
+JOIN extrasmall ON watchful = third AND unlucky BETWEEN 14 AND 20 AND obese = '5001-10000'
+WHERE d1.cheery = 1999 AND grim / sizzling BETWEEN 80 * 0.01 AND 100 * 0.01
+GROUP BY grimy, giddy, snarling
+ORDER BY cnt;
+

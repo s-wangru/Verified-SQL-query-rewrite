@@ -1,45 +1,45 @@
 
-select min(ss_recommendation),
-    min(ss_drag),
-    min(ws_signature),
-    min(c_branch),
-    min(cd_debt),
-    min(hd_debt)
+select min(swift),
+    min(noteworthy),
+    min(slow),
+    min(grimy),
+    min(knotty),
+    min(third)
 from
-    career,
-    emergency,
-    sleep d1,
-    sleep d2,
-    evening,
-    place,
-    personal,
-    document,
-    extension,
-    pitch,
-    red,
-    boss
+    corrupt,
+    quiet,
+    ample d1,
+    ample d2,
+    nippy,
+    cluttered,
+    realistic,
+    decent,
+    joyful,
+    yearly,
+    extrasmall,
+    spiffy
 where
-    ss_recommendation = i_recommendation
-    and ws_recommendation = ss_recommendation
-    and ss_paper = d1.d_shopping
-    and ws_paper = d2.d_shopping
-    and d2.d_raw between d1.d_raw and (d1.d_raw + interval '30 day')
-    and ss_branch = c_branch
-    and ws_people = c_branch
-    and ws_cap = inv_cap
-    and ws_cap = w_cap
-    and inv_recommendation = ss_recommendation
-    and inv_shopping = ss_paper
-    and inv_fight >= ss_world
-    and s_coach = w_coach
-    AND i_poem IN ('Books', 'Home', 'Sports')
-    and i_sick IN (3, 15, 17, 26, 43, 44, 55, 70, 82, 95)
-    and c_internal = cd_debt
-    and c_union = hd_debt
-    and c_tool = ca_screw
-    and ca_coach in ('IN', 'LA', 'NE', 'NM', 'OH')
-    and d1.d_tune = 2001
-    and ws_health BETWEEN 80 AND 100
+    swift = sharp
+    and unequaled = swift
+    and acclaimed = d1.miserable
+    and shameless = d2.miserable
+    and d2.mediocre between d1.mediocre and (d1.mediocre + interval '30 day')
+    and exhausted = grimy
+    and linear = grimy
+    and testy = mean
+    and testy = dual
+    and gripping = swift
+    and several = acclaimed
+    and worst >= lost
+    and mortified = wan
+    AND virtuous IN ('Books', 'Home', 'Sports')
+    and gullible IN (3, 15, 17, 26, 43, 44, 55, 70, 82, 95)
+    and petty = knotty
+    and watchful = third
+    and wretched = teeming
+    and infamous in ('IN', 'LA', 'NE', 'NM', 'OH')
+    and d1.cheery = 2001
+    and light BETWEEN 80 AND 100
     ;
 
 
