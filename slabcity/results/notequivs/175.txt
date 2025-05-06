@@ -1,0 +1,4 @@
+186: select firstname, lastname, a.city as city, a.state as state from person as p left outer join address as a on a.personid = p.personid;
+184: select city, firstname, lastname, state from person left outer join address on person.personid = address.personid;
+197: select p.firstname as firstname, p.lastname as lastname, a.city as city, a.state as state from person as p left outer join address as a on p.personid = a.personid;
+57: select person.firstname as firstname, person.lastname as lastname, address.city as city, address.state as state from person left outer join address on person.personid = address.personid;

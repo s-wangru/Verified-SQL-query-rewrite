@@ -1,0 +1,11 @@
+50: select name as employee from employee join (select id, salary as m_sal from employee) as t2 on employee.managerid = t2.id where m_sal < salary;
+226: select employee from (select e.name as employee, e.salary as salary, a.name as manager, a.salary as managersalary from employee as e join employee as a on e.managerid = a.id) as x where salary > managersalary;
+273: select employee from (select e.name as employee, e.salary as salary, m.name as manager_name, m.salary as manager_salary from employee as e left outer join employee as m on e.managerid = m.id) as temp where salary > manager_salary;
+38: select employee.name as employee from employee join employee as managers on employee.managerid = managers.id where employee.salary > managers.salary;
+42: select employee.name as employee from employee join employee as e on employee.managerid = e.id where employee.salary > e.salary;
+239: select b.name as employee from employee as a join employee as b on b.managerid = a.id where b.salary > a.salary;
+121: select b.name as employee from employee as a left outer join employee as b on a.id = b.managerid where a.salary < b.salary;
+66: select t1.name as employee from employee as t1 join employee as t2 on t1.managerid = t2.id where t1.salary > t2.salary;
+280: select name as employee from employee join (select distinct e1.id as manid, e1.salary as mansalary from employee as e1 join employee as e2 on e1.id = e2.managerid) as manager on employee.managerid = manager.manid where employee.salary > manager.mansalary;
+82: select a.name as employee from employee as a left outer join employee as b on a.managerid = b.id where a.salary > b.salary;
+329: select a.name as employee from (select a.id, a.name, a.salary, a.managerid, b.salary as managersalary from employee as a join employee as b on a.managerid = b.id where a.salary > b.salary) as a;

@@ -1,0 +1,20 @@
+2,"SELECT p.product_id, 
+MAX(CASE WHEN p.store = 'store1' THEN p.price ELSE NULL END) AS store1, 
+MAX(CASE WHEN p.store = 'store2' THEN p.price ELSE NULL END) AS store2, 
+MAX(CASE WHEN p.store = 'store3' THEN p.price ELSE NULL END) AS store3 
+FROM products p 
+GROUP BY p.product_id"
+6,"SELECT p.product_id, MAX(store1) as store1, MAX(store2) as store2, MAX(store3) as store3 FROM (SELECT DISTINCT product_id FROM products) p LEFT JOIN (SELECT product_id, price as store1, NULL as store2, NULL as store3 FROM products WHERE store = 'store1' UNION ALL SELECT product_id, NULL, price, NULL FROM products WHERE store = 'store2' UNION ALL SELECT product_id, NULL, NULL, price FROM products WHERE store = 'store3') t ON p.product_id = t.product_id GROUP BY p.product_id"
+8,"SELECT a.product_id, store1.price AS store1, store2.price AS store2, store3.price AS store3 FROM Products a LEFT JOIN Products store1 ON a.product_id = store1.product_id AND store1.store = 'store1' LEFT JOIN Products store2 ON a.product_id = store2.product_id AND store2.store = 'store2' LEFT JOIN Products store3 ON a.product_id = store3.product_id AND store3.store = 'store3'"
+81,"SELECT product_id, 
+   MAX(CASE WHEN store = 'store1' THEN price END) as store1, 
+   MAX(CASE WHEN store = 'store2' THEN price END) as store2, 
+   MAX(CASE WHEN store = 'store3' THEN price END) as store3 
+FROM Products 
+GROUP BY product_id"
+102,"SELECT product_id, MAX(CASE WHEN store = 'store1' THEN price END) AS store1, MAX(CASE WHEN store = 'store2' THEN price END) AS store2, MAX(CASE WHEN store = 'store3' THEN price END) AS store3 FROM Products GROUP BY product_id"
+105,"SELECT p.product_id, max(case when p.store ='store1' then p.price end) as store1, max(case when p.store ='store2' then p.price end) as store2, max(case when p.store ='store3' then p.price end) as store3 FROM Products p GROUP BY p.product_id"
+106,"SELECT p.product_id, MAX(CASE WHEN store = 'store1' THEN price END) AS store1, MAX(CASE WHEN store = 'store2' THEN price END) AS store2, MAX(CASE WHEN store = 'store3' THEN price END) AS store3 FROM Products p GROUP BY p.product_id"
+107,"SELECT product_id, MAX(CASE WHEN store = 'store1' THEN price END) AS store1, MAX(CASE WHEN store = 'store2' THEN price END) AS store2, MAX(CASE WHEN store = 'store3' THEN price END) AS store3 FROM Products GROUP BY product_id"
+113,"SELECT x.product_id, a.price as store1, b.price as store2, c.price as store3 FROM products as x LEFT JOIN products as a ON x.product_id = a.product_id AND a.store = 'store1' LEFT JOIN products as b ON x.product_id = b.product_id AND b.store = 'store2' LEFT JOIN products as c ON x.product_id = c.product_id AND c.store = 'store3'"
+225,"SELECT product_id, MAX(store1) AS store1, MAX(store2) AS store2, MAX(store3) AS store3 FROM (SELECT product_id, CASE WHEN store = 'store1' THEN price END AS store1, CASE WHEN store = 'store2' THEN price END AS store2, CASE WHEN store = 'store3' THEN price END AS store3 FROM Products) GROUP BY product_id"

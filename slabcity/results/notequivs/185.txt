@@ -1,0 +1,1 @@
+434: select d.name as department, e.name as employee, e.salary from (select e1.name, e1.salary, e1.departmentid from employee as e1 join employee as e2 on (e1.departmentid = e2.departmentid and e1.salary <= e2.salary) group by e1.id having count(distinct e2.salary) <= 3) as e join department as d on e.departmentid = d.id order by d.name, e.salary desc;

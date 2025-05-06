@@ -1,0 +1,1 @@
+80: select a.user_id, count(b.user_id) as followers_count from followers as a left outer join (select distinct user_id from followers) as b on a.user_id = b.user_id group by a.user_id order by a.user_id;

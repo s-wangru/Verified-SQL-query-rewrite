@@ -25,6 +25,7 @@ def load_schema_and_data(schema_path, load_path):
     return conn, schema
 
 def qed(schema, orig, optimized, qed_equal_queries, qed_nequal_queries, qed_cannotdet_queries):
+    os.makedirs('tmp', exist_ok=True)
     with open('tmp/temp.sql', 'w') as f:
         f.write(schema)
         f.write(orig)

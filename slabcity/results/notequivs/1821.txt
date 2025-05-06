@@ -1,0 +1,1 @@
+116: select customer_id from (select customer_id, sum(revenue) over (partition by customer_id order by year desc) as revenue from customers where (year = '2021' and revenue > 0)) as i;

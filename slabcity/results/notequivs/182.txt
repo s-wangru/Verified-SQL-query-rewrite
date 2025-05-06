@@ -1,0 +1,2 @@
+28: select email as email from person group by email having count(email) > 1;
+87: select a.email as email from (select email, count(id) as countt from person group by email) as a where a.countt > 1;
